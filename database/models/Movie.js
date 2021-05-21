@@ -1,4 +1,3 @@
-
 module.exports = (sequelize, dataTypes) => {
 
     const alias = "Movies"
@@ -30,7 +29,7 @@ module.exports = (sequelize, dataTypes) => {
 
     const config = {
         tableName : "movies",
-        timeStamps : false
+        timestamps : false
     }
 
     const Movie = sequelize.define(alias, cols, config)

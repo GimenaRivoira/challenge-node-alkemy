@@ -1,10 +1,10 @@
 var express = require('express');
 var router = express.Router();
 
-const {} = require('../controller/characterController');
+const {getAll, getOne, filter, create, edit} = require('../API/characterController');
 
-router.get('/', function(req, res, next) {
-    res.send('respond with a resource');
-  });  
-
+router.get('/', getAll);  
+router.get('/:id', getOne); 
+router.post('/create', create);
+router.put('/edit/:id', edit);
 module.exports = router;
