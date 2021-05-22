@@ -11,15 +11,44 @@ module.exports = (sequelize, dataTypes) => {
         },
         title : {
             type : dataTypes.STRING(45),
-            allowNull : false
+            allowNull : false,
+            validate : {
+                notNull : {
+                    msg : 'Movies.title can not be null'
+                },
+                notEmpty : {
+                    msg : 'Movies.title can not be empty'
+                }
+            }
         },
         release_date : {
             type : dataTypes.DATE,
-            allowNull : false
+            allowNull : false,
+            validate : {
+                notNull : {
+                    msg : 'Movies.release_date can not be null'
+                },
+                notEmpty : {
+                    msg : 'Movies.release_date can not be empty'
+                },
+                isDate: true
+            }
         },
         score : {
             type : dataTypes.INTEGER,
-            allowNull : false
+            allowNull : false,
+            validate: {
+                isIn: {
+                    args: [[1,2,3,4,5]],
+                    msg: "Movies.score has to be lower than 6"
+                },
+                notNull : {
+                    msg : 'Movies.score can not be null'
+                },
+                notEmpty : {
+                    msg : 'Movies.score can not be empty'
+                },
+            }
         },
         image : {
             type : dataTypes.STRING(45),
@@ -34,9 +63,9 @@ module.exports = (sequelize, dataTypes) => {
 
     const Movie = sequelize.define(alias, cols, config)
 
-     Movie.associate = function(models){
+     /* Movie.associate = function(models){
         Movie.belongsToMany(models.Character, {
-            as : 'movies',
+            as : 'characters',
             through : 'movies_characters',
             foreignKey : 'moviesId',
             otherKey : 'characterId'
@@ -46,7 +75,7 @@ module.exports = (sequelize, dataTypes) => {
             as : 'moviesgenre',
             foreignKey : 'moviesId'
         })
-    } 
+    }  */
 
     return Movie
 }

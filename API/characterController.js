@@ -23,24 +23,25 @@ module.exports = {
         .catch(err => console.log(err))
     },
     getOne : (req, res) => {
-         if(req.params.id % 1 !== 0){
+         /* if(req.params.id % 1 !== 0){
             res.status(400).json({
                 status: 400,
                 msg : 'Incorrect ID'
             })
-        } 
+        }  */
 
         db.Character.findOne({
             where: {
                 id : req.params.id
             }
-        } /* {
+        }, 
+        {
             include : [
                 {
                     association : 'movies'
                 }
             ]
-        } */)
+        })
         .then(element => {
             if(element){
                 let response = {
@@ -76,7 +77,7 @@ module.exports = {
                let response = {
                    meta : {
                     status : 200,
-                    msg : `the movie ${element.name} was added successfully`,
+                    msg : `the character ${element.name} was added successfully`,
                     endpoint :getUrl(req) + '/' + element.id
                 }
             }
@@ -134,19 +135,63 @@ module.exports = {
             if(element[0]){
                 let response = {
                     status : 200,
-                    msg : `the movie ${element.name} was edited`,
+                    msg : `the character ${element.name} was edited`,
                     endpoint : getUrl(req) + '/' + element.id
                 }
                res.status(200).json(response)
             } else {
                 res.status(400).json({
                     status : 400,
-                    msg : 'The movies could not be found'
+                    msg : 'The character could not be found'
                 })
             }
         })
         .catch(err => {
             console.log(err)
         })
+    },
+    remove : (req, res)=> {
+        db.Character.destroy({
+            where : {
+                id : req.params.id
+            }
+        })
+        .then(response => {
+            if(response){
+                res.status(200).json({
+                    status : 200,
+                    msg : 'The character was successfully removed'
+                })
+            } else {
+                res.status(400).json({
+                    status : 400,
+                    msg : 'Character not found'
+                })
+            }
+        })
+    },
+    search: (req, res) => {
+        search = req.query.search
+
+        db.Character.findAll({
+            where : {
+                name : { [Op.like]: `%${req.query.search}%` }
+            }
+        })
+        .then(response => {
+            if(response){
+                let result = {
+                    meta : {
+                        status : 200,
+                        lenght : response.length
+                    },
+                    data : {
+                        response
+                    }
+                }
+                res.send(result)
+            }
+        })
+        .catch(err => console.log(err))
     }
 }
