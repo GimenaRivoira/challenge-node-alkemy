@@ -60,11 +60,11 @@ module.exports = {
         db.Movies.create({
             title,
             release_date,
-            score : +score <= 5,
-            image
+            score,
+            image,
         })
         .then(element => {
-            if(element && element.score){
+            if(element){
                let response = {
                    meta : {
                     status : 200,

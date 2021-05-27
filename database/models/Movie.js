@@ -52,7 +52,16 @@ module.exports = (sequelize, dataTypes) => {
         },
         image : {
             type : dataTypes.STRING(45),
-            allowNull : false
+            allowNull : false,
+            validate : {
+                is : /(.jpg|.jpeg|.png|.gif)$/i,
+                notNull : {
+                    msg : 'Movies.image can not be null'
+                },
+                notEmpty : {
+                    msg : 'Movies.image can not be empty'
+                }
+            }
         }
     }
 
@@ -63,7 +72,7 @@ module.exports = (sequelize, dataTypes) => {
 
     const Movie = sequelize.define(alias, cols, config)
 
-     /* Movie.associate = function(models){
+      Movie.associate = function(models){
         Movie.belongsToMany(models.Character, {
             as : 'characters',
             through : 'movies_characters',
@@ -75,7 +84,7 @@ module.exports = (sequelize, dataTypes) => {
             as : 'moviesgenre',
             foreignKey : 'moviesId'
         })
-    }  */
+    }  
 
     return Movie
 }

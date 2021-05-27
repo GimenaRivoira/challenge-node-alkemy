@@ -11,23 +11,66 @@ module.exports = (sequelize, dataTypes) => {
         },
         name : {
             type : dataTypes.STRING(45),
-            allowNull: false
+            allowNull: false,
+            validate : {
+                notNull : {
+                    msg : 'Character.name can not be null'
+                },
+                notEmpty : {
+                    msg : 'Character.name can not be empty'
+                }
+            }
         },
         age : {
             type : dataTypes.INTEGER,
-            allowNull : false
+            allowNull : false,
+            validate : {
+                is : /^[0-9]*$/,
+                notNull : {
+                    msg : 'Character.age can not be null'
+                },
+                notEmpty : {
+                    msg : 'Character.age can not be empty'
+                }
+            }
         },
         weight : {
             type : dataTypes.DECIMAL,
-            allowNull : false
+            allowNull : false,
+            validate : {
+                is : /^[0-9]{1,2}$/,
+                notNull : {
+                    msg : 'Character.weight can not be null'
+                },
+                notEmpty : {
+                    msg : 'Character.weight can not be empty'
+                }
+            }
         },
         history : {
             type : dataTypes.STRING(45),
-            allowNull : false
+            allowNull : false,
+            validate : {
+                notNull : {
+                    msg : 'Character.history can not be null'
+                },
+                notEmpty : {
+                    msg : 'Character.history can not be empty'
+                }
+            }
         },
         image : {
             type : dataTypes.STRING(45),
-            allowNull : false
+            allowNull : false,
+            validate : {
+                is : /(.jpg|.jpeg|.png|.gif)$/i,
+                notNull : {
+                    msg : 'Character.image can not be null'
+                },
+                notEmpty : {
+                    msg : 'Character.image can not be empty'
+                }
+            }
         }
     }
 
