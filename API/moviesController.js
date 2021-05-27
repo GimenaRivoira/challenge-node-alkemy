@@ -118,7 +118,7 @@ module.exports = {
         db.Movies.update({
             title,
             release_date,
-            score : +score,
+            score,
             image
         }, 
         {
@@ -191,8 +191,5 @@ module.exports = {
                 })
             }
         })
-    },
-    search : (req, res) => {
-        
     }
 }

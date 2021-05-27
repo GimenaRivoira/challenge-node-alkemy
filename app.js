@@ -11,6 +11,7 @@ var usersRouter = require('./routes/users');
 var moviesRouter = require('./routes/movies')
 var charactersRouter = require('./routes/character');
 var userRouter = require('./routes/users');
+var emailRouter = require('./routes/email');
 
 var app = express();
 
@@ -29,6 +30,7 @@ app.use('/users', usersRouter);
 app.use('/characters', charactersRouter);
 app.use('/movies', moviesRouter);
 app.use('/auth', userRouter);
+app.use('/email', emailRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

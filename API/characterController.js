@@ -7,7 +7,7 @@ const getUrl = (req) => req.protocol + '://' + req.get('host') + '/characters'
 module.exports = {
     getAll : (req, res) => {
         db.Character.findAll({
-            attributes : ['name', 'image']
+            attributes : ['id', 'name', 'image']
         })
         .then(element => {
             let response = {
@@ -23,12 +23,12 @@ module.exports = {
         .catch(err => console.log(err))
     },
     getOne : (req, res) => {
-         /* if(req.params.id % 1 !== 0){
+           if(req.params.id % 1 !== 0){
             res.status(400).json({
                 status: 400,
                 msg : 'Incorrect ID'
             })
-        }  */
+        }   
 
         db.Character.findOne({
             where: {
@@ -54,12 +54,12 @@ module.exports = {
                     }
                 }
                 res.status(200).json(response)
-            } else {
+            }  else {
                 res.status(404).json({
                     status: 404,
                     msg : 'No character yet'
                 })
-            } 
+            }  
         })
     },
     create : (req, res) => {
@@ -169,29 +169,5 @@ module.exports = {
                 })
             }
         })
-    },
-    search: (req, res) => {
-        search = req.query.search
-
-        db.Character.findAll({
-            where : {
-                name : { [Op.like]: `%${req.query.search}%` }
-            }
-        })
-        .then(response => {
-            if(response){
-                let result = {
-                    meta : {
-                        status : 200,
-                        lenght : response.length
-                    },
-                    data : {
-                        response
-                    }
-                }
-                res.send(result)
-            }
-        })
-        .catch(err => console.log(err))
     }
 }
